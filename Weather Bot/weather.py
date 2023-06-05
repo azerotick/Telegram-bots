@@ -54,11 +54,11 @@ async def contacts(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     
     keyboard = [
         [
-            InlineKeyboardButton("Telegram", url ="https://t.me/lunando"),
-            InlineKeyboardButton("Instagram", url="https://www.instagram.com/blackword.ss/"),
-            InlineKeyboardButton("GitHub", url="https://github.com/azerotick")
+            InlineKeyboardButton("Telegram", url='https://t.me/lunando'),
+            InlineKeyboardButton("Instagram", url='https://www.instagram.com/blackword.ss/'),
+            InlineKeyboardButton("GitHub", url='https://github.com/azerotick')
         ],  
-        [InlineKeyboardButton("А что еще надо?", url="")],
+        [InlineKeyboardButton("А что еще надо?", url='https://avatars.dzeninfra.ru/get-zen_doc/34175/pub_5cea2361585c2f00b5c9cb0b_5cea310a752e5b00b25b9c01/scale_1200')],
     ]
     contactkeys = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text('Контакты создателя бота:', reply_markup=contactkeys)
