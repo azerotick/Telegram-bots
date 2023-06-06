@@ -45,7 +45,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     weather_data = get_weather(city)
     if weather_data ["cod"] == 200:
         temp = weather_data['main']['temp']
-        message = 'Сейчас {}. \nТемпература в вашем городе {} сейчас {} градусов по Цельсию. \nВведите название города в котором хотите узнать погоду.'.format(strftime("%H:%M", localtime()), city, temp)
+        feels = weather_data['main']['feels_like']
+        message = 'Сейчас {}. \nТемпература в вашем городе "{}" сейчас {} градусов по Цельсию.\nОщущается как : {} \nВведите название города в котором хотите узнать погоду.'.format(strftime("%H:%M", localtime()), city, round(temp),  round(feels))
     else:
         message = 'Не удалось получить информацию о погоду в вашем городе. \nВведите название города, погоду которого хотите узнать.'
     await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
@@ -75,10 +76,11 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     weather_data = get_weather(city)
     if weather_data['cod'] == 200:
         temp = weather_data['main']['temp']
+        feels = weather_data['main']['feels_like']
         description = weather_data['weather'][0]['description']
-        message = 'Сейчас {}.\nТемпература в городе {} сейчас {} градусов по Цельсию. {}'.format( strftime("%H:%M", localtime()),city, temp, description)
+        message = 'Сейчас {}.\nТемпература в городе "{}" сейчас {} градусов по Цельсию. \nОщущается как : {}'.format( strftime("%H:%M", localtime()),city, round(temp), round(feels))
     else:
-        message = 'Не удалось получить прогноз погоды для города {}. Попробуйте еще раз.'.format(city)     
+        message = 'Не удалось получить прогноз погоды для города "{}". Попробуйте еще раз.'.format(city)     
     await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 #API-ключ для OpenWeatherMap
