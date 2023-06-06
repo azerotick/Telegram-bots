@@ -3,7 +3,8 @@ import requests
 import re
 import json
 import logging
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from time import localtime, strftime
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from telegram import __version__ as TG_VER
 
@@ -44,7 +45,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     weather_data = get_weather(city)
     if weather_data ["cod"] == 200:
         temp = weather_data['main']['temp']
-        message = 'Температура в вашем городе {} сейчас {} градусов по Цельсию. \nВведите название города в котором хотите узнать погоду.'.format(city, temp)
+        message = 'Сейчас {}. \nТемпература в вашем городе {} сейчас {} градусов по Цельсию. \nВведите название города в котором хотите узнать погоду.'.format(strftime("%H:%M", localtime()), city, temp)
     else:
         message = 'Не удалось получить информацию о погоду в вашем городе. \nВведите название города, погоду которого хотите узнать.'
     await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
@@ -75,9 +76,9 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if weather_data['cod'] == 200:
         temp = weather_data['main']['temp']
         description = weather_data['weather'][0]['description']
-        message = 'Температура в городе {} сейчас {} градусов по Цельсию. {}'.format(city, temp, description)
+        message = 'Сейчас {}.\nТемпература в городе {} сейчас {} градусов по Цельсию. {}'.format( strftime("%H:%M", localtime()),city, temp, description)
     else:
-        message = 'Не удалось получить прогноз погоды для города {}. Попробуйте еще раз.'.format(city)
+        message = 'Не удалось получить прогноз погоды для города {}. Попробуйте еще раз.'.format(city)     
     await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 #API-ключ для OpenWeatherMap
