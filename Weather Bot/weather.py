@@ -77,7 +77,6 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if weather_data['cod'] == 200:
         temp = weather_data['main']['temp']
         feels = weather_data['main']['feels_like']
-        description = weather_data['weather'][0]['description']
         message = 'Сейчас {}.\nТемпература в городе "{}" сейчас {} градусов по Цельсию. \nОщущается как : {}'.format( strftime("%H:%M", localtime()),city, round(temp), round(feels))
     else:
         message = 'Не удалось получить прогноз погоды для города "{}". Попробуйте еще раз.'.format(city)     
